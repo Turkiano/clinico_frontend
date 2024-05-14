@@ -6,8 +6,8 @@ Tech Stack: React, TypeScript. Styling: Tailwind, MUI, or CSS/SASS
 
 **Pages to Create:**
 
-1. Home page (list all the products)
-2. Product page (contain the details of a product)
+[x] Home page (list all the products)
+[x] Product page (contain the details of a product)
 3. Dashboard page
 
 **Functionalities for a Visitor:**
