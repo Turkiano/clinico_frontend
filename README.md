@@ -16,7 +16,7 @@ Tech Stack: React, TypeScript. Styling: Tailwind, MUI, or CSS/SASS
 - Filter products by categories or price
 - Search products by name
 - Add products to a cart
-- Remove products from a cart
+- Remove products from a cart 
 
 **Functionalities for an Admin:**
 

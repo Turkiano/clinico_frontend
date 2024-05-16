@@ -12,7 +12,7 @@ export default function ProductDetail() {
   const getProduct = async () => {
     try {
       if (params.productId) {
-        const res = await api.get(`/products/${params.productId}`)
+        const res = await api.get(`/products/${params.productId}`) //adjust the end-point
         return res.data
       }
     } catch (error) {
@@ -36,6 +36,9 @@ export default function ProductDetail() {
   if (error) {
     return <p>Product not found</p>
   }
+  if (!data) {
+    return <p>No data</p>
+  }
 
   return (
     <div>
@@ -46,7 +49,7 @@ export default function ProductDetail() {
             alt="Product Image"
             className="w-full h-auto rounded-lg shadow-md"
             height={600}
-            src="/placeholder.svg"
+            src={data.image}
             style={{
               aspectRatio: "800/600",
               objectFit: "cover"
