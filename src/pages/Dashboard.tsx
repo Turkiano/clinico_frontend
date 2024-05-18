@@ -2,7 +2,7 @@ import api from "@/api"
 import { ProductsCard } from "@/components/ProductsCard"
 import { ProductCreateForm } from "@/components/component/product-create-form"
 import { Product } from "@/types"
-import { useQuery } from "@tanstack/react-query"
+import { QueryClient, useQuery } from "@tanstack/react-query"
 
 import {
   Table,
@@ -14,8 +14,11 @@ import {
   TableRow
 } from "@/components/ui/table"
 import { CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 export function Dashboard() {
+  const queryClient = new QueryClient()
+
   const getProducts = async () => {
     try {
       const res = await api.get("/products")
@@ -31,6 +34,26 @@ export function Dashboard() {
     queryKey: ["products"],
     queryFn: getProducts
   })
+
+  const handleDeleteProduct = async (id: string) => {
+    try {
+      const res = await api.delete(`/products/${id}`)
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+
+  //     queryClient.invalidateQueries({ queryKey: ["products"] }) to reresh refetch  the latest data after delete
+
+  const deleteProduct = async (id: string) => {
+    console.log("id", id)
+    await handleDeleteProduct(id)
+    queryClient.invalidateQueries({ queryKey: ["products"] })
+  }
+
+  console.log(products)
 
   return (
     <>
@@ -59,8 +82,17 @@ export function Dashboard() {
                 <TableCell className="text-center">{product.name}</TableCell>
                 <TableCell className="text-center">{product.categoryId}</TableCell>
                 <TableCell className="text-left">{product.price}</TableCell>
-
-                <TableCell className="text-right">{product.quantity}</TableCell>
+                <TableCell>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={{ width: "80px", height: "50px" }}
+                  />
+                </TableCell>
+                <TableCell className="text-right">{product.quntity}</TableCell>
+                <TableCell>
+                  <Button onClick={() => deleteProduct(product.id)}>Delete</Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

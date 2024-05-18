@@ -4,7 +4,7 @@ export type Product = {
   categoryId: number
   image: string
   description: string
-  quantity: number
+  quntity: number
   price: number
 }
 

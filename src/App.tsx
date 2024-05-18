@@ -40,12 +40,17 @@ function App() {
     cart: []
   })
   const handelAddToCart = (product: Product) => {
+    const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
+    if (isDuplicated) return
+
     setState({
       ...state,
       cart: [...state.cart, product]
     })
-    console.log(state.cart)
   }
+
+  console.log(state.cart)//this to count the array inside the cart s
+
   return (
     <div className="App">
       <GlobalContext.Provider value={{ state, handelAddToCart }}>

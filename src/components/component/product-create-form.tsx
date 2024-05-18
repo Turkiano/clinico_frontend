@@ -11,7 +11,15 @@ import { useState } from "react"
 export function ProductCreateForm() {
   const queryClient = new QueryClient()
 
-  const [product, setProduct] = useState({ name: "", price: 0, categoryId: "" })
+  const [product, setProduct] = useState({
+    name: "",
+    price: 0,
+    categoryId: "",
+    image: "",
+    quntity: 0,
+    description: ""
+  })
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     console.log({ name, value })
@@ -67,14 +75,46 @@ export function ProductCreateForm() {
               onChange={handleChange}
             />
           </div>
-          <Label htmlFor="price">CategoryId</Label>
-          <Input
-            name="categoryId"
-            id="category"
-            placeholder="Enter Category Id"
-            type="text"
-            onChange={handleChange}
-          />
+          <div className="grid gap-2">
+            <Label htmlFor="price">CategoryId</Label>
+            <Input
+              name="categoryId"
+              id="category"
+              placeholder="Enter Category Id"
+              type="text"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="image">Image</Label>
+            <Input
+              name="image"
+              id="image"
+              placeholder="Paste the image"
+              type="text"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="image">Quantity</Label>
+            <Input
+              name="quntity"
+              id="quntity"
+              placeholder="Enter the quntity"
+              type="number"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="image">Description</Label>
+            <Input
+              name="description"
+              id="description"
+              placeholder="Enter the description"
+              type="text"
+              onChange={handleChange}
+            />
+          </div>
           {/* <div className="grid gap-2">
             <Label htmlFor="category">Category</Label>
             <Select id="category">
