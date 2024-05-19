@@ -8,14 +8,19 @@ import { Dashboard } from "./pages/Dashboard"
 import { createContext, useState } from "react"
 import { Product } from "./types"
 import { Login } from "./pages/Login"
+import { SignUp } from "./pages/SignUp"
 
-const router = createBrowserRouter([
+const router = createBrowserRouter([ //this is the router function
   {
-    path: "/",
+    path: "/", // this is the Home page path
     element: <Home />
   },
   {
-    path: "/Login",
+    path: "/SignUp", // this is the sign up path
+    element: <SignUp />
+  },
+  {
+    path: "/Login", // this is the login path
     element: <Login />
   },
   {
@@ -27,7 +32,7 @@ const router = createBrowserRouter([
     path: "/dashboard", // this is the dashboard path
     element: <Dashboard />
   }
-]) //this is the router function
+]) 
 
 type GlobalContextType = {
   state: GlobalState
