@@ -7,11 +7,16 @@ import ProductDetail from "./pages/ProductDetail"
 import { Dashboard } from "./pages/Dashboard"
 import { createContext, useState } from "react"
 import { Product } from "./types"
+import { Login } from "./pages/Login"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />
+  },
+  {
+    path: "/Login",
+    element: <Login />
   },
   {
     path: "/product/:productId", // this is the ProductDetails path
@@ -49,7 +54,7 @@ function App() {
     })
   }
 
-  console.log(state.cart)//this to count the array inside the cart s
+  console.log(state.cart) //this to count the array inside the cart s
 
   return (
     <div className="App">
