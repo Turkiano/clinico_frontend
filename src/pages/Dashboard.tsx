@@ -1,9 +1,10 @@
 import api from "@/api"
-import { ProductsCard } from "@/components/ProductsCard"
-import { ProductCreateForm } from "@/components/component/product-create-form"
-import { Product } from "@/types"
-import { QueryClient, useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { Product, User } from "@/types"
 
+import { ProductCreateForm } from "@/components/component/product-create-form"
+import { CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -13,15 +14,32 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 
 export function Dashboard() {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
 
   const getProducts = async () => {
+    //this is how to get the products from the database
     try {
       const res = await api.get("/products")
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+
+  const getUsers = async () => {
+    //this is how to get the Users from the database
+
+    try {
+      const token = localStorage.getItem("token")
+      const res = await api.get("/users", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
       return res.data
     } catch (error) {
       console.error(error)
@@ -33,6 +51,11 @@ export function Dashboard() {
   const { data: products, error } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: getProducts
+  })
+
+  const { data: users, error: userError } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: getUsers
   })
 
   const handleDeleteProduct = async (id: string) => {

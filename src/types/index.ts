@@ -15,3 +15,31 @@ export type Category = {
   products :  []
   
 }
+
+export type User = {
+
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    role: string
+  
+}
+
+export const Role = {
+  
+  Customer: "Customer",
+  Admin: "Admin"
+} as const
+
+
+export type DecodedUser = {
+
+  aud: string
+  emailaddress: string
+  exp: number
+  iss: string
+  name: string
+  role: keyof Role
+
+}

@@ -1,16 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-
-import NavMenu from "./components/NavMenu"
-import { Home } from "./pages/Home"
 import "./App.css"
+import { createContext, useContext, useEffect, useState } from "react"
+import { DecodedUser, Product } from "./types"
+
+import { Home } from "./pages/Home"
 import ProductDetail from "./pages/ProductDetail"
 import { Dashboard } from "./pages/Dashboard"
-import { createContext, useState } from "react"
-import { Product } from "./types"
 import { Login } from "./pages/Login"
 import { SignUp } from "./pages/SignUp"
+import { WithAuth } from "./components/component/WithAuth"
 
-const router = createBrowserRouter([ //this is the router function
+const router = createBrowserRouter([
+  //this is the router function
   {
     path: "/", // this is the Home page path
     element: <Home />
@@ -30,25 +31,46 @@ const router = createBrowserRouter([ //this is the router function
 
   {
     path: "/dashboard", // this is the dashboard path
-    element: <Dashboard />
+    element: (
+      <WithAuth>
+        <Dashboard />
+      </WithAuth>
+    )
   }
-]) 
+])
 
 type GlobalContextType = {
   state: GlobalState
   handelAddToCart: (product: Product) => void
+  handleStoreUser: (user: DecodedUser) => void
 }
 
 type GlobalState = {
+  //here to choose what to sotre (data type)
   cart: Product[]
+  user: DecodedUser | null //store the entire users, or use the {decodedUser}
 }
 
 export const GlobalContext = createContext<GlobalContextType | null>(null)
 
 function App() {
+  //here we can listen and record data
   const [state, setState] = useState<GlobalState>({
-    cart: []
+    cart: [], //listening to cart (product)
+    user: null // we can make it null, since we set it at the data type to null
   })
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    if (user) {
+      const decodedUser = JSON.parse(user)
+      setState({
+        ...state,
+        user: decodedUser
+      })
+    }
+  }, [])
+
   const handelAddToCart = (product: Product) => {
     const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
     if (isDuplicated) return
@@ -59,11 +81,18 @@ function App() {
     })
   }
 
-  console.log(state.cart) //this to count the array inside the cart s
+  const handleStoreUser = (user: DecodedUser) => {
+    setState({
+      ...state,
+      user
+    })
+  }
+
+  // console.log(state.cart) //this to count the array inside the cart s
 
   return (
     <div className="App">
-      <GlobalContext.Provider value={{ state, handelAddToCart }}>
+      <GlobalContext.Provider value={{ state, handelAddToCart, handleStoreUser }}>
         <RouterProvider router={router} /> {/* //this is to invok the router function */}
       </GlobalContext.Provider>
     </div>

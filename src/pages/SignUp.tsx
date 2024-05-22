@@ -1,15 +1,14 @@
 import api from "@/api"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Value } from "@radix-ui/react-select"
 import { ChangeEvent, FormEvent, useState } from "react"
-
-const handelChange = () => {
-  return
-}
+import { Link, useNavigate } from "react-router-dom"
 
 export function SignUp() {
+  const navigate = useNavigate()
+
   const [user, setUser] = useState({
+    //this function to listen to the changes
     firstName: "",
     lastName: "",
     email: "",
@@ -19,8 +18,8 @@ export function SignUp() {
   const handelSignUp = async () => {
     //this is how we get the product data from the database
     try {
-      console.log(setUser)
-      const res = await api.post(`users/singup`, user)
+      console.log(user)
+      const res = await api.post(`/users/signup`, user) // to talk to the back-end using the api-post (matching the swagger Post method)
       return res.data
     } catch (error) {
       console.error(error)
@@ -37,15 +36,20 @@ export function SignUp() {
     })
   }
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    await handelSignUp()
+    e.preventDefault() //to stop refreshing the page when submiting the form
+    const response = await handelSignUp() //to invoke the handelSIgnUp function
+    console.log("response:", response)
+
+    if (response) {
+      navigate("/login") //this is to send them to the login page, after signing up
+    }
   }
 
   return (
     <div>
       <h1>Sign Up Page</h1>
 
-      <form className="w-full mx-auto  md: w-1/3 ">
+      <form className="w-1/2 mx-auto  md: w-1/3 ">
         <Input
           name="firstName"
           className="mt-4"
@@ -77,7 +81,13 @@ export function SignUp() {
           onChange={handelChange}
         />
         <div className="flex justify-between flex-col">
-          <Button className="mt-4">Signup</Button>
+          <Button className="mt-4" onClick={handleSubmit}>
+            Signup
+          </Button>
+
+          <Button variant="link" className="mt-4 ghost">
+            <Link to="/Login">I have an account already</Link>
+          </Button>
         </div>
       </form>
     </div>

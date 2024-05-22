@@ -134,7 +134,7 @@ export function ProductCreateForm() {
               </SelectContent>
             </Select>
           </div> */}
-          <Button className="w-1/5 mx-auto" type="submit">
+          <Button className="w-1/5 mx-auto " type="submit">
             Create Product
           </Button>
           <Button className="w-1/5 mx-auto" type="reset">

@@ -1,4 +1,3 @@
-import api from "@/api"
 import {
   Card,
   CardContent,
@@ -7,37 +6,23 @@ import {
   CardHeader,
   CardTitle
 } from "../components/ui/card"
-import { Product } from "@/types"
 import { Button } from "@/components/ui/button"
+
+import { Product } from "@/types"
+import { GlobalContext } from "@/App"
 import { Link } from "react-router-dom"
 import { useContext } from "react"
-
-import { GlobalContext } from "@/App"
 
 type ProductCardProps = {
   data: Product[] | undefined
 }
 
 export function ProductsCard({ data }: ProductCardProps) {
-  const context = useContext(GlobalContext)
+  const context = useContext(GlobalContext) //this to conect to the global context
   if (!context) throw Error("Context is missing")
   const { state, handelAddToCart } = context
 
-  // const getProducts = async () => {
-  //   try {
-  //     const res = await api.get("/products")
-  //     return res.data
-  //   } catch (error) {
-  //     console.error(error)
-  //     return Promise.reject(new Error("Something went wrong"))
-  //   }
-  // }
-
   // // Queries
-  // const { data, error } = useQuery<Product[]>({
-  //   queryKey: ["products"],
-  //   queryFn: getProducts
-  // })
 
   return (
     <div>

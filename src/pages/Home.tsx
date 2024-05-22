@@ -1,20 +1,20 @@
 import api from "@/api"
-
 import { Product } from "@/types"
-import { QueryClient, useQuery } from "@tanstack/react-query"
-import NavMenu from "@/components/NavMenu"
+import { ChangeEvent, useState } from "react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+
 import { ProductsCard } from "@/components/ProductsCard"
+import { Button } from "@/components/ui/button"
 import { NavBar } from "@/components/ui/navbar"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { ChangeEvent, useState } from "react"
+import NavMenu from "@/components/NavMenu"
 
 export function Home() {
   // console.log("Context:", context)
   // const [search, setSearch] = useState<string>("")
   const [search, setSearch] = useState<string>("")
 
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient() // the library to refresh the data
 
   const getProducts = async () => {
     //this is how we get the product data from the database
@@ -38,12 +38,13 @@ export function Home() {
     setSearch(e.target.value)
   }
 
-  console.log("search value when user is typing ", search)
+  // console.log("search value when user is typing ", search)
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log("search button click")
     queryClient.invalidateQueries({ queryKey: ["products"] })
+    // when click search button, will refresh the lateste data based on the keywrod 
   }
   console.log("data ", data)
 
