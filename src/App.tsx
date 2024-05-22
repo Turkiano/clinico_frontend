@@ -1,57 +1,100 @@
-import { useQuery } from "@tanstack/react-query"
-
-import { Button } from "./components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "./components/ui/card"
-import { Product } from "./types"
-import api from "./api"
-
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import "./App.css"
+import { createContext, useContext, useEffect, useState } from "react"
+import { DecodedUser, Product } from "./types"
+
+import { Home } from "./pages/Home"
+import ProductDetail from "./pages/ProductDetail"
+import { Dashboard } from "./pages/Dashboard"
+import { Login } from "./pages/Login"
+import { SignUp } from "./pages/SignUp"
+import { WithAuth } from "./components/component/WithAuth"
+
+const router = createBrowserRouter([
+  //this is the router function
+  {
+    path: "/", // this is the Home page path
+    element: <Home />
+  },
+  {
+    path: "/SignUp", // this is the sign up path
+    element: <SignUp />
+  },
+  {
+    path: "/Login", // this is the login path
+    element: <Login />
+  },
+  {
+    path: "/product/:productId", // this is the ProductDetails path
+    element: <ProductDetail />
+  },
+
+  {
+    path: "/dashboard", // this is the dashboard path
+    element: (
+      <WithAuth>
+        <Dashboard />
+      </WithAuth>
+    )
+  }
+])
+
+type GlobalContextType = {
+  state: GlobalState
+  handelAddToCart: (product: Product) => void
+  handleStoreUser: (user: DecodedUser) => void
+}
+
+type GlobalState = {
+  //here to choose what to sotre (data type)
+  cart: Product[]
+  user: DecodedUser | null //store the entire users, or use the {decodedUser}
+}
+
+export const GlobalContext = createContext<GlobalContextType | null>(null)
 
 function App() {
-  const getProducts = async () => {
-    try {
-      const res = await api.get("/products")
-      return res.data
-    } catch (error) {
-      console.error(error)
-      return Promise.reject(new Error("Something went wrong"))
+  //here we can listen and record data
+  const [state, setState] = useState<GlobalState>({
+    cart: [], //listening to cart (product)
+    user: null // we can make it null, since we set it at the data type to null
+  })
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    if (user) {
+      const decodedUser = JSON.parse(user)
+      setState({
+        ...state,
+        user: decodedUser
+      })
     }
+  }, [])
+
+  const handelAddToCart = (product: Product) => {
+    const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
+    if (isDuplicated) return
+
+    setState({
+      ...state,
+      cart: [...state.cart, product]
+    })
   }
 
-  // Queries
-  const { data, error } = useQuery<Product[]>({
-    queryKey: ["products"],
-    queryFn: getProducts
-  })
+  const handleStoreUser = (user: DecodedUser) => {
+    setState({
+      ...state,
+      user
+    })
+  }
+
+  // console.log(state.cart) //this to count the array inside the cart s
 
   return (
     <div className="App">
-      <h1 className="text-2xl uppercase mb-10">Products</h1>
-
-      <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto">
-        {data?.map((product) => (
-          <Card key={product.id} className="w-[350px]">
-            <CardHeader>
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>Some Description here</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>Card Content Here</p>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Add to cart</Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </section>
-      {error && <p className="text-red-500">{error.message}</p>}
+      <GlobalContext.Provider value={{ state, handelAddToCart, handleStoreUser }}>
+        <RouterProvider router={router} /> {/* //this is to invok the router function */}
+      </GlobalContext.Provider>
     </div>
   )
 }
