@@ -20,7 +20,7 @@ type ProductCardProps = {
 export function ProductsCard({ data }: ProductCardProps) {
   const context = useContext(GlobalContext) //this to conect to the global context
   if (!context) throw Error("Context is missing")
-  const { state, handelAddToCart } = context
+  const { state, handleAddToCart } = context
 
   // // Queries
 
@@ -44,7 +44,7 @@ export function ProductsCard({ data }: ProductCardProps) {
                 <Button className="w-80%">Show Details</Button>
               </Link>
               <Link className="w-full" to="">
-                <Button className="w-80%" onClick={() => handelAddToCart(product)}>
+                <Button className="w-80%" onClick={() => handleAddToCart(product)}>
                   Add to Cart
                 </Button>
               </Link>

@@ -2,7 +2,6 @@ import api from "@/api"
 import { Button } from "@/components/ui/button"
 import { Product } from "@/types"
 import { useQuery } from "@tanstack/react-query"
-import React from "react"
 import { useParams } from "react-router-dom"
 import NavMenu from "@/components/NavMenu"
 

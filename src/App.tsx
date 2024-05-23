@@ -41,8 +41,9 @@ const router = createBrowserRouter([
 
 type GlobalContextType = {
   state: GlobalState
-  handelAddToCart: (product: Product) => void
+  handleAddToCart: (product: Product) => void
   handleStoreUser: (user: DecodedUser) => void
+  handleDeleteFromCart: (id: string) => void
 }
 
 type GlobalState = {
@@ -71,13 +72,22 @@ function App() {
     }
   }, [])
 
-  const handelAddToCart = (product: Product) => {
+  const handleAddToCart = (product: Product) => {
     const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
     if (isDuplicated) return
 
     setState({
       ...state,
       cart: [...state.cart, product]
+    })
+  }
+
+  const handleDeleteFromCart = (id: string) => {
+    const filteredCart = state.cart.filter((item) => item.id !== id)
+
+    setState({
+      ...state,
+      cart: filteredCart //this is the update product list (after deleting)
     })
   }
 
@@ -92,7 +102,9 @@ function App() {
 
   return (
     <div className="App">
-      <GlobalContext.Provider value={{ state, handelAddToCart, handleStoreUser }}>
+      <GlobalContext.Provider
+        value={{ state, handleAddToCart, handleStoreUser, handleDeleteFromCart }}
+      >
         <RouterProvider router={router} /> {/* //this is to invok the router function */}
       </GlobalContext.Provider>
     </div>

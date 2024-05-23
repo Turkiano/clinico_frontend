@@ -9,6 +9,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList
 } from "@radix-ui/react-navigation-menu"
+import { Cart } from "../component/cart"
 
 export function NavBar() {
   const context = useContext(GlobalContext) //this to conect to the global context
@@ -18,7 +19,7 @@ export function NavBar() {
   console.log("This is the global object:", state)
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mx auto">
       <div className="">
         <h3>Logo</h3>
       </div>
@@ -61,6 +62,9 @@ export function NavBar() {
           )}
         </NavigationMenuList>
       </NavigationMenu>
+      {/* this to add the cart as an icon */}
+      <Cart />
+      {/* this to add the cart as an icon */}
     </div>
   )
 }
