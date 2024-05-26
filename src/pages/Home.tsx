@@ -1,5 +1,6 @@
 import api from "@/api"
 import { Product } from "@/types"
+import { GlobalContext } from "@/App"
 import { ChangeEvent, useContext, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
@@ -7,18 +8,16 @@ import { ProductsCard } from "@/components/ProductsCard"
 import { Button } from "@/components/ui/button"
 import { NavBar } from "@/components/ui/navbar"
 import { Input } from "@/components/ui/input"
-import { GlobalContext } from "@/App"
 
 export function Home() {
   const context = useContext(GlobalContext) //consume from the Global State
   if (!context) throw Error("Context is missing")
-  const { handleAddToCart } = context
 
   const [search, setSearch] = useState<string>("")
 
   const queryClient = useQueryClient() // the library to refresh the data
 
-  const getProducts = async () => {
+  const getProducts = async () => { //call 
     //this is how we get the product data from the database
     try {
       console.log(search)

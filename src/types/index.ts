@@ -9,37 +9,33 @@ export type Product = {
 }
 
 export type Category = {
-
   id: string
   name: string
-  products :  []
-  
+  products: []
 }
 
 export type User = {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  role: string
 
-    id: string
-    firstName: string
-    lastName: string
-    email: string
-    role: string
-  
+  nameidentifier: string
 }
 
 export const Role = {
-  
   Customer: "Customer",
   Admin: "Admin"
 } as const
 
-
 export type DecodedUser = {
-
   aud: string
   emailaddress: string
+
+  nameidentifier: string
   exp: number
   iss: string
   name: string
-  role: keyof Role
-
+  role: keyof typeof Role
 }

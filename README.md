@@ -13,11 +13,10 @@ Tech Stack: React, TypeScript. Styling: Tailwind, MUI, or CSS/SASS
 **Functionalities for a Visitor:**
 
 [x] Get list of products
-
 - Filter products by categories or price
-  [x] Search products by name
-  [x] Add products to a cart
-  [x] Remove products from a cart
+[x] Search products by name
+[x] Add products to a cart
+[x] Remove products from a cart
 
 **Functionalities for an Admin:**
 

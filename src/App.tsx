@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import "./App.css"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { DecodedUser, Product } from "./types"
+import "./App.css"
 
 import { Home } from "./pages/Home"
 import ProductDetail from "./pages/ProductDetail"
@@ -9,6 +9,8 @@ import { Dashboard } from "./pages/Dashboard"
 import { Login } from "./pages/Login"
 import { SignUp } from "./pages/SignUp"
 import { WithAuth } from "./components/component/WithAuth"
+import { UserProfile } from "./pages/UserProfile"
+import UsersDashboard from "./pages/UsersDashboard"
 
 const router = createBrowserRouter([
   //this is the router function
@@ -24,6 +26,12 @@ const router = createBrowserRouter([
     path: "/Login", // this is the login path
     element: <Login />
   },
+
+  {
+    path: "/users/profile/:email/", // this is the user's profile path
+    element: <UserProfile />
+  },
+
   {
     path: "/product/:productId", // this is the ProductDetails path
     element: <ProductDetail />
@@ -36,6 +44,11 @@ const router = createBrowserRouter([
         <Dashboard />
       </WithAuth>
     )
+  },
+
+  {
+    path: "/dashboard/users",
+    element: <UsersDashboard />
   }
 ])
 

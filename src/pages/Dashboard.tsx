@@ -14,6 +14,8 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+import { NavBar } from "@/components/ui/navbar"
+import { DashboardTabs } from "@/components/component/DashboardTabs"
 
 export function Dashboard() {
   const queryClient = useQueryClient()
@@ -60,7 +62,12 @@ export function Dashboard() {
 
   const handleDeleteProduct = async (id: string) => {
     try {
-      const res = await api.delete(`/products/${id}`)
+      const token = localStorage.getItem("token")
+      const res = await api.delete(`/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}` //this is to give access to admin with token sent to the back-end
+        }
+      })
       return res.data
     } catch (error) {
       console.error(error)
@@ -69,7 +76,6 @@ export function Dashboard() {
   }
 
   //     queryClient.invalidateQueries({ queryKey: ["products"] }) to reresh refetch  the latest data after delete
-
   const deleteProduct = async (id: string) => {
     console.log("id", id)
     await handleDeleteProduct(id)
@@ -80,9 +86,11 @@ export function Dashboard() {
 
   return (
     <>
+      <NavBar />
+      {/* <DashboardTabs /> */}
       <div>
         <ProductCreateForm />
-        {/* <ProductsCard /> */}
+        {/* <DashboardTabs /> */}
       </div>
       <div>
         <CardTitle>Product list</CardTitle>

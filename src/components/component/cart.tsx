@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-
 import { GlobalContext } from "@/App"
 import { useContext } from "react"
 import { ShoppingCart } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+
 
 export function Cart() {
   const context = useContext(GlobalContext) //consume from the Global State
