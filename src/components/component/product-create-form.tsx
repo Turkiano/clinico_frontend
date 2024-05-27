@@ -26,14 +26,20 @@ export function ProductCreateForm() {
     setProduct({ ...product, [name]: value })
   }
   const postProduct = async () => {
+    const token = localStorage.getItem("token")//this to send the token with the request to the localStorage
     try {
-      const res = await api.post("/products", product)
+      const res = await api.post("/products", product, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       return res.data
     } catch (error) {
       console.error(error)
       return Promise.reject(new Error("Something went wrong"))
     }
   }
+
   const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await postProduct()

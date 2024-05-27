@@ -33,7 +33,6 @@ export function DashboardTabs() {
 
   const getUsers = async () => {
     //this is how to get the Users from the database
-
     try {
       const token = localStorage.getItem("token")
       const res = await api.get("/users", {
@@ -65,6 +64,7 @@ export function DashboardTabs() {
     }
   }
 
+  
   //     queryClient.invalidateQueries({ queryKey: ["products"] }) to reresh refetch  the latest data after delete
 
   const deleteProduct = async (id: string) => {

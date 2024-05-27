@@ -2,9 +2,6 @@ import api from "@/api"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Product, User } from "@/types"
 
-import { ProductCreateForm } from "@/components/component/product-create-form"
-import { CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -15,7 +12,11 @@ import {
   TableRow
 } from "@/components/ui/table"
 import { NavBar } from "@/components/ui/navbar"
+import { Button } from "@/components/ui/button"
+import { CardTitle } from "@/components/ui/card"
+import { EditDialog } from "@/components/component/editDialog"
 import { DashboardTabs } from "@/components/component/DashboardTabs"
+import { ProductCreateForm } from "@/components/component/product-create-form"
 
 export function Dashboard() {
   const queryClient = useQueryClient()
@@ -88,9 +89,9 @@ export function Dashboard() {
     <>
       <NavBar />
       {/* <DashboardTabs /> */}
+
       <div>
         <ProductCreateForm />
-        {/* <DashboardTabs /> */}
       </div>
       <div>
         <CardTitle>Product list</CardTitle>
@@ -123,6 +124,9 @@ export function Dashboard() {
                 <TableCell className="text-right">{product.quntity}</TableCell>
                 <TableCell>
                   <Button onClick={() => deleteProduct(product.id)}>Delete</Button>
+                </TableCell>
+                <TableCell>
+                  <EditDialog product={product} />
                 </TableCell>
               </TableRow>
             ))}
