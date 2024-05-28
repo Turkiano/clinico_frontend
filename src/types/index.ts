@@ -1,3 +1,16 @@
+import axios from "axios"
+
+const isDevelopment = import.meta.env.MODE === `development`
+let baseURL = "htpp://localhost:3000/api/v1"
+
+if (!isDevelopment) {
+  baseURL = "https://clinico-backend.onrender.com/api/v1"
+}
+
+const api = axios.create({
+  baseURL
+})
+
 export type Product = {
   id: string
   name: string
@@ -41,8 +54,10 @@ export type DecodedUser = {
 }
 
 export type Order = {
-  id: string 
-  userId: string 
-  date: string 
-  orderItem: string 
+  id: string
+  userId: string
+  date: string
+  orderItem: string
 }
+
+export default api
