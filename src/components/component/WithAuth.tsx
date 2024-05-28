@@ -5,16 +5,10 @@ import { Navigate } from "react-router-dom"
 import { reshapeUsher } from "@/lib/utils"
 
 export function WithAuth({ children }: { children: ReactElement }) {
-  console.log("Global Data")
+  // console.log("Global Data")
 
   const token = localStorage.getItem("token") || "" // to collect the token from the localStore
   const decodedToken = jwt(token)
-  const decodedUser: any = reshapeUsher(decodedToken)
-
-  
-
-  console.log(decodedUser.role,  Role.Customer);
-  
-
-  return decodedUser.role === Role.Customer ? <Navigate to="/login" /> : children
+  const decodedUser= reshapeUsher(decodedToken)
+  return decodedUser.role === Role.Admin ?  children: <Navigate to="/login" /> 
 }

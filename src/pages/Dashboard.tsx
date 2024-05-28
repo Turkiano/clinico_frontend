@@ -2,9 +2,6 @@ import api from "@/api"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Product, User } from "@/types"
 
-import { ProductCreateForm } from "@/components/component/product-create-form"
-import { CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -14,6 +11,12 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+import { NavBar } from "@/components/ui/navbar"
+import { Button } from "@/components/ui/button"
+import { CardTitle } from "@/components/ui/card"
+import { EditDialog } from "@/components/component/editDialog"
+import { DashboardTabs } from "@/components/component/DashboardTabs"
+import { ProductCreateForm } from "@/components/component/product-create-form"
 
 export function Dashboard() {
   const queryClient = useQueryClient()
@@ -60,7 +63,12 @@ export function Dashboard() {
 
   const handleDeleteProduct = async (id: string) => {
     try {
-      const res = await api.delete(`/products/${id}`)
+      const token = localStorage.getItem("token")
+      const res = await api.delete(`/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}` //this is to give access to admin with token sent to the back-end
+        }
+      })
       return res.data
     } catch (error) {
       console.error(error)
@@ -69,20 +77,21 @@ export function Dashboard() {
   }
 
   //     queryClient.invalidateQueries({ queryKey: ["products"] }) to reresh refetch  the latest data after delete
-
   const deleteProduct = async (id: string) => {
     console.log("id", id)
     await handleDeleteProduct(id)
     queryClient.invalidateQueries({ queryKey: ["products"] })
   }
 
-  console.log(products)
+  // console.log(products)
 
   return (
     <>
+      <NavBar />
+      <DashboardTabs />
+
       <div>
         <ProductCreateForm />
-        {/* <ProductsCard /> */}
       </div>
       <div>
         <CardTitle>Product list</CardTitle>
@@ -115,6 +124,9 @@ export function Dashboard() {
                 <TableCell className="text-right">{product.quntity}</TableCell>
                 <TableCell>
                   <Button onClick={() => deleteProduct(product.id)}>Delete</Button>
+                </TableCell>
+                <TableCell>
+                  <EditDialog product={product} />
                 </TableCell>
               </TableRow>
             ))}

@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import "./App.css"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { DecodedUser, Product } from "./types"
+import "./App.css"
 
 import { Home } from "./pages/Home"
 import ProductDetail from "./pages/ProductDetail"
@@ -9,6 +9,9 @@ import { Dashboard } from "./pages/Dashboard"
 import { Login } from "./pages/Login"
 import { SignUp } from "./pages/SignUp"
 import { WithAuth } from "./components/component/WithAuth"
+import { UserProfile } from "./pages/UserProfile"
+import UsersDashboard from "./pages/UsersDashboard"
+import { stat } from "fs"
 
 const router = createBrowserRouter([
   //this is the router function
@@ -24,6 +27,12 @@ const router = createBrowserRouter([
     path: "/Login", // this is the login path
     element: <Login />
   },
+
+  {
+    path: "/users/profile/:email/", // this is the user's profile path
+    element: <UserProfile />
+  },
+
   {
     path: "/product/:productId", // this is the ProductDetails path
     element: <ProductDetail />
@@ -36,13 +45,19 @@ const router = createBrowserRouter([
         <Dashboard />
       </WithAuth>
     )
+  },
+
+  {
+    path: "/dashboard/users",
+    element: <UsersDashboard />
   }
 ])
 
 type GlobalContextType = {
   state: GlobalState
-  handelAddToCart: (product: Product) => void
+  handleAddToCart: (product: Product) => void
   handleStoreUser: (user: DecodedUser) => void
+  handleDeleteFromCart: (id: string) => void
 }
 
 type GlobalState = {
@@ -71,13 +86,24 @@ function App() {
     }
   }, [])
 
-  const handelAddToCart = (product: Product) => {
-    const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
-    if (isDuplicated) return
+  const handleAddToCart = (product: Product) => {
+    // const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
+    // if (isDuplicated) return //to stop the duplicated  items
 
     setState({
       ...state,
       cart: [...state.cart, product]
+    })
+  }
+
+  const handleDeleteFromCart = (id: string) => {
+    const cart = state.cart
+    const index = state.cart.findIndex((item) => item.id === id)
+    cart.splice(index, 1)
+
+    setState({
+      ...state,
+      cart: cart //this is the update caart list (after deleting)
     })
   }
 
@@ -92,7 +118,9 @@ function App() {
 
   return (
     <div className="App">
-      <GlobalContext.Provider value={{ state, handelAddToCart, handleStoreUser }}>
+      <GlobalContext.Provider
+        value={{ state, handleAddToCart, handleStoreUser, handleDeleteFromCart }}
+      >
         <RouterProvider router={router} /> {/* //this is to invok the router function */}
       </GlobalContext.Provider>
     </div>

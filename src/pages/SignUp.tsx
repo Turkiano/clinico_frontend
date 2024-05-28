@@ -18,7 +18,7 @@ export function SignUp() {
   const handelSignUp = async () => {
     //this is how we get the product data from the database
     try {
-      console.log(user)
+      // console.log(user)
       const res = await api.post(`/users/signup`, user) // to talk to the back-end using the api-post (matching the swagger Post method)
       return res.data
     } catch (error) {
@@ -38,7 +38,7 @@ export function SignUp() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault() //to stop refreshing the page when submiting the form
     const response = await handelSignUp() //to invoke the handelSIgnUp function
-    console.log("response:", response)
+    // console.log("response:", response)
 
     if (response) {
       navigate("/login") //this is to send them to the login page, after signing up
