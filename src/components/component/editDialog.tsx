@@ -42,7 +42,7 @@ export function EditDialog({ product }: { product: Product }) {
       ...updatedProduct,
       name: value
     })
-    console.log(value )
+    // console.log(value )
   }
 
   const handleUpdate = async (e) => {

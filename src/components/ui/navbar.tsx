@@ -11,15 +11,16 @@ import { Role } from "@/types"
 
 import { Cart } from "../component/cart"
 import { Button } from "./button"
-import { PowerOffIcon, ShoppingCart, User, UserRoundIcon } from "lucide-react"
-import { UserProfile } from "@/pages/UserProfile"
+import { UserRoundIcon } from "lucide-react"
 
 export function NavBar() {
   const context = useContext(GlobalContext) //this to conect to the global context
   if (!context) throw Error("Context is missing")
   const { state } = context //this is to consume the object
 
-  console.log("This is the global object:", state.user)
+  // console.log("This is the global object:", state.user)
+
+  
 
   return (
     <div className="flex justify-between mx auto">

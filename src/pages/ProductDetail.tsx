@@ -25,8 +25,8 @@ export default function ProductDetail() {
     queryKey: ["product"],
     queryFn: getProduct
   })
-  console.log(data)
-  console.log(error)
+  // console.log(data)
+  // console.log(error)
 
   if (isLoading) {
     return <p>Loading....</p>

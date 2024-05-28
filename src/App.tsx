@@ -11,6 +11,7 @@ import { SignUp } from "./pages/SignUp"
 import { WithAuth } from "./components/component/WithAuth"
 import { UserProfile } from "./pages/UserProfile"
 import UsersDashboard from "./pages/UsersDashboard"
+import { stat } from "fs"
 
 const router = createBrowserRouter([
   //this is the router function
@@ -86,8 +87,8 @@ function App() {
   }, [])
 
   const handleAddToCart = (product: Product) => {
-    const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
-    if (isDuplicated) return
+    // const isDuplicated = state.cart.find((cartItem) => cartItem.id === product.id)
+    // if (isDuplicated) return //to stop the duplicated  items
 
     setState({
       ...state,
@@ -96,11 +97,15 @@ function App() {
   }
 
   const handleDeleteFromCart = (id: string) => {
-    const filteredCart = state.cart.filter((item) => item.id !== id)
+    const cart = state.cart
+    const index = state.cart.findIndex((item) => item.id === id)
+    cart.splice(index, 1)
+    console.log("cart", cart)
+
 
     setState({
       ...state,
-      cart: filteredCart //this is the update product list (after deleting)
+      cart: cart //this is the update caart list (after deleting)
     })
   }
 

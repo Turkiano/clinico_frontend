@@ -39,3 +39,10 @@ export type DecodedUser = {
   name: string
   role: keyof typeof Role
 }
+
+export type Order = {
+  id: string 
+  userId: string 
+  date: string 
+  orderItem: string 
+}

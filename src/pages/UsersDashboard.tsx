@@ -9,9 +9,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
-import { NavBar } from "@/components/ui/navbar"
 import { CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import api from "@/api"
 import { useQuery } from "@tanstack/react-query"
 import { User } from "@/types"
@@ -38,20 +36,19 @@ export default function UsersDashboard() {
     queryFn: getUsers
   })
 
-  console.log("users ", users)
+  // console.log("users ", users)
   return (
     <div>
-      <CardTitle>Product list</CardTitle>
+      <CardTitle>User list</CardTitle>
 
       <Table>
         <TableCaption>A list of your recent Products.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[200px] text-center">Id</TableHead>
+            <TableHead className="w-full text-center">Id</TableHead>
             <TableHead className="text-center">Name</TableHead>
             <TableHead className="text-center">Category Id</TableHead>
-            <TableHead className="text-left">Price</TableHead>
-            <TableHead className="text-right">Quantity</TableHead>
+            <TableHead className="text-left">Role</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

@@ -83,12 +83,12 @@ export function Dashboard() {
     queryClient.invalidateQueries({ queryKey: ["products"] })
   }
 
-  console.log(products)
+  // console.log(products)
 
   return (
     <>
       <NavBar />
-      {/* <DashboardTabs /> */}
+      <DashboardTabs />
 
       <div>
         <ProductCreateForm />

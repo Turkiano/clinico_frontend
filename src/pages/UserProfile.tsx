@@ -16,9 +16,10 @@ export function UserProfile() {
     try {
       const token = localStorage.getItem("token") //this to save the token in the sotrage when user login
 
-      const res = await api.get(`/users/${email}`, { //we are targeting user email to find users 
+      const res = await api.get(`/users/${email}`, {
+        //we are targeting user email to find users
         headers: {
-          Authorization: `Bearer ${token}`//this is to send the token to the back-end
+          Authorization: `Bearer ${token}` //this is to send the token to the back-end
         }
       }) //this to target userId
       return res.data
@@ -39,7 +40,7 @@ export function UserProfile() {
     queryFn: getUser
   })
 
-  console.log("user's info:", userData)
+  // console.log("user's info:", userData)
   // this to make sure if there is data coming from userData
 
   if (isLoading) {

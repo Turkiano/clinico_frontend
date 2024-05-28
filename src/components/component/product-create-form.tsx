@@ -22,7 +22,7 @@ export function ProductCreateForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log({ name, value })
+    // console.log({ name, value })
     setProduct({ ...product, [name]: value })
   }
   const postProduct = async () => {
