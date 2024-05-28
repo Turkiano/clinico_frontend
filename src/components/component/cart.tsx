@@ -29,7 +29,7 @@ export function Cart() {
           <ShoppingCart />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-96">
+      <SheetContent className="w-300">
         <div>
           {state.cart.length === 0 && <p>No items</p>}
           {Object.keys(groups).map((key) => {
@@ -55,7 +55,7 @@ export function Cart() {
                 >
                   -
                 </Button>
-                <span className="ml-5"> Q: ({products.length})</span>
+                <span className="ml-5"> F: ({products.length})</span>
                 <Button
                   variant="outline"
                   className="p-2 ml-5"
