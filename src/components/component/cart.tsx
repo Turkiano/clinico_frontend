@@ -60,7 +60,7 @@ export function Cart() {
                 >
                   -
                 </Button>
-                <span className="ml-5"> F: ({products.length})</span>
+                <span className="ml-5"> ({products.length})</span>
                 <Button
                   variant="outline"
                   className="p-2 ml-5"
@@ -72,6 +72,7 @@ export function Cart() {
             )
           })}
         </div>
+        <p>Total: {total} </p>
       </SheetContent>
     </Sheet>
   )
