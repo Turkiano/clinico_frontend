@@ -102,7 +102,6 @@ function App() {
     cart.splice(index, 1)
     console.log("cart", cart)
 
-
     setState({
       ...state,
       cart: cart //this is the update caart list (after deleting)
