@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const isDevelopment = import.meta.env.MODE === `development`
-let baseURL = "htpp://localhost:3000/api/v1"
+let baseURL = "htpp://localhost:5125/api/v1"
 
 if (!isDevelopment) {
   baseURL = "https://clinico-backend.onrender.com/api/v1"
