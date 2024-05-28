@@ -16,6 +16,11 @@ export function Cart() {
     return { ...acc, [key]: [...curGroup, obj] }
   }, {})
 
+  let total = 0
+  state.cart.forEach((item) => {
+    total += item.price
+  })
+
   // console.log("groups", groups)
 
   // const keys = Object.entries(groups)
@@ -29,7 +34,7 @@ export function Cart() {
           <ShoppingCart />
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-300">
+      <SheetContent>
         <div>
           {state.cart.length === 0 && <p>No items</p>}
           {Object.keys(groups).map((key) => {
