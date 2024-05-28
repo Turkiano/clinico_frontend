@@ -100,7 +100,6 @@ function App() {
     const cart = state.cart
     const index = state.cart.findIndex((item) => item.id === id)
     cart.splice(index, 1)
-    console.log("cart", cart)
 
     setState({
       ...state,
