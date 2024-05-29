@@ -16,16 +16,20 @@ export function Cart() {
     return { ...acc, [key]: [...curGroup, obj] }
   }, {})
 
-  let total = 0
-  state.cart.forEach((item) => {
-    total += item.price
-  })
+  const total = state.cart.reduce((acc, curr) => {
+    //this to get the total items' price in cart
+    return acc + curr.price
+  }, 0)
+  // let total = 0 //this is another way to get the total items' price in cart
+  // state.cart.forEach((item) => {
+  //   total += item.price
+  // })
 
   // console.log("groups", groups)
 
   // const keys = Object.entries(groups)
   // console.log("keys", keys)
-
+ 
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -43,7 +47,10 @@ export function Cart() {
 
             const product = products[0]
             // console.log("product", product)
-
+            const total = products.reduce((acc, curr) => {
+              //this to get the total items' price in cart
+              return acc + curr.price
+            }, 0)
             return (
               <div className="mb-5 flex  items-center justify-center" key={product.id}>
                 <img
@@ -52,7 +59,7 @@ export function Cart() {
                   className="w-10 h-10 object-contain mr-5"
                 />
                 <span>{product.name}</span>
-                <span className="ml-3 font-bold">SAR {product.price}</span>
+                <span className="ml-3 font-bold">SAR {total}</span>
                 <Button
                   variant="outline"
                   className="p-2 ml-5"
@@ -72,7 +79,7 @@ export function Cart() {
             )
           })}
         </div>
-        <p>Total: {total} </p>
+        <p>Total:SAR {total} </p>
       </SheetContent>
     </Sheet>
   )

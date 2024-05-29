@@ -8,6 +8,7 @@ import { ProductsCard } from "@/components/ProductsCard"
 import { Button } from "@/components/ui/button"
 import { NavBar } from "@/components/ui/navbar"
 import { Input } from "@/components/ui/input"
+import { MainNavBar } from "@/components/ui/mainNavBar"
 
 export function Home() {
   const context = useContext(GlobalContext) //consume from the Global State
@@ -17,7 +18,8 @@ export function Home() {
 
   const queryClient = useQueryClient() // the library to refresh the data
 
-  const getProducts = async () => { //call 
+  const getProducts = async () => {
+    //call
     //this is how we get the product data from the database
     try {
       console.log(search)
@@ -53,6 +55,7 @@ export function Home() {
     <>
       <div>
         <NavBar />
+        <MainNavBar />
         {/* <NavMenu /> */}
 
         {/* this form for searh bar */}
