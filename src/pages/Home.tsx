@@ -55,7 +55,7 @@ export function Home() {
     <>
       <div>
         <NavBar />
-        <MainNavBar />
+        {/* <MainNavBar /> */}
         {/* <NavMenu /> */}
 
         {/* this form for searh bar */}
