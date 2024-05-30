@@ -1,5 +1,5 @@
 import api from "@/api"
-import { Product } from "@/types"
+import { Category, Product } from "@/types"
 import { GlobalContext } from "@/App"
 import { ChangeEvent, useContext, useState } from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -8,13 +8,15 @@ import { ProductsCard } from "@/components/ProductsCard"
 import { Button } from "@/components/ui/button"
 import { NavBar } from "@/components/ui/navbar"
 import { Input } from "@/components/ui/input"
-import { MainNavBar } from "@/components/ui/mainNavBar"
+import { Hero } from "@/components/component/hero"
+import { Footer } from "@/components/ui/footer"
 
 export function Home() {
   const context = useContext(GlobalContext) //consume from the Global State
   if (!context) throw Error("Context is missing")
 
   const [search, setSearch] = useState<string>("")
+  const [filter, setFilter] = useState<string>("")
 
   const queryClient = useQueryClient() // the library to refresh the data
 
@@ -22,11 +24,23 @@ export function Home() {
     //call
     //this is how we get the product data from the database
     try {
-      console.log(search)
-      const res = await api.get(`products?limit=5&page=1&search=${search}`)
+      // console.log(search)
+      const res = await api.get(`products?limit=5&page=1&search=${search}&filter=${filter}`)
       return res.data
     } catch (error) {
-      console.error(error)
+      // console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+  const getCategories = async () => {
+    //call
+    //this is how we get the product data from the database
+    try {
+      // console.log(search)
+      const res = await api.get("categories")
+      return res.data
+    } catch (error) {
+      // console.error(error)
       return Promise.reject(new Error("Something went wrong"))
     }
   }
@@ -36,27 +50,40 @@ export function Home() {
     queryKey: ["products"],
     queryFn: getProducts
   })
+  const { data: category, error: categoryError } = useQuery<Category[]>({
+    queryKey: ["categories"],
+    queryFn: getCategories
+  })
+  console.log("categories from backend ", category)
+  console.log("id of category ", filter)
+  console.log("products when category filtered ", data)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
 
-  // console.log("search value when user is typing ", search)
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("search button click")
     queryClient.invalidateQueries({ queryKey: ["products"] })
     // when click search button, will refresh the lateste data based on the keywrod
   }
-  console.log("data ", data)
+  const handleGetAllProducts = async () => {
+    setFilter("")
+    await queryClient.invalidateQueries({ queryKey: ["products"] })
+  }
 
+  if (!data) {
+    return <h1>Products list is loading</h1>
+  }
+  if (!category) {
+    return <h1>Category is loading</h1>
+  }
   return (
     <>
-      <div>
-        <NavBar />
-        {/* <MainNavBar /> */}
-        {/* <NavMenu /> */}
+      <NavBar />
+
+      <div className="overflow-hidden">
+        <Hero />
 
         {/* this form for searh bar */}
         <form onSubmit={handleSearch} className="w-1/2 mx-auto m-10 flex">
@@ -67,8 +94,15 @@ export function Home() {
         </form>
         {/* this form for searh bar */}
 
-        <ProductsCard data={data} />
+        <ProductsCard
+          data={data}
+          category={category}
+          setFilter={setFilter}
+          handleGetAllProducts={handleGetAllProducts}
+        />
       </div>
+
+      <Footer />
     </>
   )
 }

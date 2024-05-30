@@ -42,6 +42,7 @@ export default function ProductDetail() {
   return (
     <div>
       <NavMenu />
+
       <div className="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-12">
         <div className="w-full md:w-1/2">
           <img

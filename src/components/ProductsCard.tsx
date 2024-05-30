@@ -8,27 +8,89 @@ import {
 } from "../components/ui/card"
 import { Button } from "@/components/ui/button"
 
-import { Product } from "@/types"
+import api, { Category, Product } from "@/types"
 import { GlobalContext } from "@/App"
 import { Link } from "react-router-dom"
-import { useContext } from "react"
+import { ChangeEvent, useContext, useState } from "react"
+import { useQueryClient } from "@tanstack/react-query"
 
 type ProductCardProps = {
-  data: Product[] | undefined
+  data: Product[]
+  category: Category[]
+  setFilter: React.Dispatch<React.SetStateAction<string>>
+  handleGetAllProducts: () => void
 }
 
-export function ProductsCard({ data }: ProductCardProps) {
+export function ProductsCard({
+  data,
+  category,
+  setFilter,
+  handleGetAllProducts
+}: ProductCardProps) {
   const context = useContext(GlobalContext) //this to conect to the global context
   if (!context) throw Error("Context is missing")
   const { state, handleAddToCart } = context
 
-  // // Queries
+  const queryClient = useQueryClient()
+
+  // const filterProduct = async () => {
+  //   //call
+  //   //this is how we get the product data from the database
+  //   try {
+  //     // console.log(search)
+  //     const res = await api.get(`products?limit=5&page=1&search=${filter}`)
+  //     return res.data
+  //   } catch (error) {
+  //     // console.error(error)
+  //     return Promise.reject(new Error("Something went wrong"))
+  //   }
+  // }
+
+  const handleFilterCategory = async (id: string) => {
+    // if (id) {
+    //   setFilter(id)
+    //   await queryClient.invalidateQueries({ queryKey: ["products"] })
+    // } else {
+    //   setFilter("")
+    //   await queryClient.invalidateQueries({ queryKey: ["products"] })
+    // }
+    await setFilter(id)
+    await queryClient.invalidateQueries({ queryKey: ["products"] })
+  }
 
   return (
     <div>
       <h3>Cart ({state.cart.length})</h3>
       <h1 className="text-2xl uppercase mb-10">Products</h1>
-      <section className="flex flex-col md:flex-row gap-4 justify-between max-w-6xl mx-auto mb-5">
+
+      <div className="flex justify-center items-center mx auto w-full">
+        <div className="flex justify-between w-auto mb-5">
+          <Button
+            variant="link"
+            onClick={() => {
+              handleGetAllProducts()
+            }}
+          >
+            {" "}
+            All
+          </Button>
+          {category.map((item) => {
+            return (
+              <Button
+                key={item.id}
+                variant="link"
+                onClick={() => {
+                  handleFilterCategory(item.id)
+                }}
+              >
+                {item.name}
+              </Button>
+            )
+          })}
+        </div>
+      </div>
+
+      <section className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5 w-screen overflow-x-scroll">
         {data?.map((product) => (
           <Card key={product.id} className="w-[350px]">
             <CardHeader>

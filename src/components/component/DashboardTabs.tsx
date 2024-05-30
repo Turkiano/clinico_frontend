@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getTokenFromStorage } from "@/lib/utils"
 
 export function DashboardTabs() {
   const queryClient = useQueryClient()
@@ -68,8 +69,14 @@ export function DashboardTabs() {
   })
 
   const handleDeleteProduct = async (id: string) => {
+    const token = getTokenFromStorage()
+    console.log("token ", token)
     try {
-      const res = await api.delete(`/products/${id}`)
+      const res = await api.delete(`/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       return res.data
     } catch (error) {
       console.error(error)

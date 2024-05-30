@@ -20,10 +20,8 @@ export function NavBar() {
 
   // console.log("This is the global object:", state.user)
 
-  
-
   return (
-    <div className="flex justify-between mx auto">
+    <div className="flex justify-between items-center mx auto border-b p-3 sticky top-0 left-0 bg-background z-50">
       <div className="">
         <h3>Logo</h3>
       </div>
@@ -66,23 +64,25 @@ export function NavBar() {
           )}
         </NavigationMenuList>
       </NavigationMenu>
-      {/* this to add the cart as an icon */}
-      <Cart />
-      {/* this to add the cart as an icon */}
+      <div className="flex gap-3 item-center ">
+        {/* this to add the cart as an icon */}
+        <Cart />
+        {/* this to add the cart as an icon */}
 
-      <NavigationMenu>
-        <NavigationMenuList className="flex gap-5 mr-5">
-          {state.user && (
-            <NavigationMenuItem>
-              <Link to={`/users/profile/${state.user.emailaddress}/`}>
-                <Button variant="outline">
-                  <UserRoundIcon />
-                </Button>
-              </Link>
-            </NavigationMenuItem>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
+        <NavigationMenu>
+          <NavigationMenuList className="flex gap-5 mr-5">
+            {state.user && (
+              <NavigationMenuItem>
+                <Link to={`/users/profile/${state.user.emailaddress}/`}>
+                  <Button variant="outline">
+                    <UserRoundIcon />
+                  </Button>
+                </Link>
+              </NavigationMenuItem>
+            )}
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
     </div>
   )
 }
