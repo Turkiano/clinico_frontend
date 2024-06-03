@@ -4,6 +4,10 @@ import { Product } from "@/types"
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import NavMenu from "@/components/NavMenu"
+import { NavBar } from "@/components/ui/navbar"
+import { StaticDateTimePicker } from "@mui/x-date-pickers/StaticDateTimePicker"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { DateTimePicer } from "@/components/ui/dateTimePicker"
 
 export default function ProductDetail() {
   const params = useParams()
@@ -41,7 +45,7 @@ export default function ProductDetail() {
 
   return (
     <div>
-      <NavMenu />
+      <NavBar />
 
       <div className="flex flex-col md:flex-row items-center justify-between space-y-8 md:space-y-0 md:space-x-12">
         <div className="w-full md:w-1/2">

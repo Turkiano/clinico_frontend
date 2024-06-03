@@ -12,6 +12,7 @@ import { WithAuth } from "./components/component/WithAuth"
 import { UserProfile } from "./pages/UserProfile"
 import UsersDashboard from "./pages/UsersDashboard"
 import { stat } from "fs"
+import { LocalizationProvider } from "@mui/x-date-pickers"
 
 const router = createBrowserRouter([
   //this is the router function

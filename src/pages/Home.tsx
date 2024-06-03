@@ -10,6 +10,7 @@ import { NavBar } from "@/components/ui/navbar"
 import { Input } from "@/components/ui/input"
 import { Hero } from "@/components/component/hero"
 import { Footer } from "@/components/ui/footer"
+import { LoadingPage } from "@/components/loadingPage"
 
 export function Home() {
   const context = useContext(GlobalContext) //consume from the Global State
@@ -46,7 +47,7 @@ export function Home() {
   }
 
   // Queries
-  const { data, error } = useQuery<Product[]>({
+  const { data, error, isPending } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: getProducts
   })
@@ -71,12 +72,17 @@ export function Home() {
     setFilter("")
     await queryClient.invalidateQueries({ queryKey: ["products"] })
   }
+  // if (!isPending) {
+  //   //this to show the animated page page, when its loading
+  //   return <LoadingPage />
+  // }
 
   if (!data) {
-    return <h1>Products list is loading</h1>
+    //this to show the animated page page, when its loading
+    return <LoadingPage />
   }
   if (!category) {
-    return <h1>Category is loading</h1>
+    return <LoadingPage />
   }
   return (
     <>

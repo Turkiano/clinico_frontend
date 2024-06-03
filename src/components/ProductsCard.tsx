@@ -60,8 +60,9 @@ export function ProductsCard({
 
   return (
     <div>
-      <h3>Cart ({state.cart.length})</h3>
-      <h1 className="text-2xl uppercase mb-10">Products</h1>
+      {/* <h3>Cart ({state.cart.length})</h3> */}
+      <h1 className="text-2xl uppercase mb-1">Our Doctors</h1>
+      <p className="mb-10 col-gray">More than 20 years of experience in their field</p>
 
       <div className="flex justify-center items-center mx auto w-full">
         <div className="flex justify-between w-auto mb-5">
@@ -90,29 +91,31 @@ export function ProductsCard({
         </div>
       </div>
 
-      <section className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5 w-screen overflow-x-scroll">
-        {data?.map((product) => (
-          <Card key={product.id} className="w-[350px]">
-            <CardHeader>
-              <img src={product.image} className="mb-4 h-48 object-contain" />
-              <CardTitle>{product.name}</CardTitle>
-              <CardDescription>{product.description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>SAR {product.price}</p>
-            </CardContent>
-            <CardFooter>
-              <Link className="w-full" to={`/product/${product.id}`}>
-                <Button className="w-80%">Show Details</Button>
-              </Link>
-              <Link className="w-full" to="">
-                <Button className="w-80%" onClick={() => handleAddToCart(product)}>
-                  Add to Cart
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
+      <section className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5 w-screen overflow-x-scroll ">
+        <div className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5  overflow-x-scroll  w-[75%]">
+          {data?.map((product) => (
+            <Card key={product.id} className="w-[350px]">
+              <CardHeader>
+                <img src={product.image} className="mb-4 h-48 object-contain" />
+                <CardTitle>{product.name}</CardTitle>
+                <CardDescription>{product.description}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>SAR {product.price}</p>
+              </CardContent>
+              <CardFooter>
+                <Link className="w-full" to={`/product/${product.id}`}>
+                  <Button className="w-80%">Show Details</Button>
+                </Link>
+                <Link className="w-full" to="">
+                  <Button className="w-80%" onClick={() => handleAddToCart(product)}>
+                    Add to Cart
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </section>
     </div>
   )

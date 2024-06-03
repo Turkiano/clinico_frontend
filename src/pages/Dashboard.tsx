@@ -24,7 +24,7 @@ export function Dashboard() {
   const getProducts = async () => {
     //this is how to get the products from the database
     try {
-      const res = await api.get("/products")
+      const res = await api.get("/products") //this is the get request 
       return res.data
     } catch (error) {
       console.error(error)
@@ -37,7 +37,7 @@ export function Dashboard() {
 
     try {
       const token = localStorage.getItem("token")
-      const res = await api.get("/users", {
+      const res = await api.get("/users", { //this is the get request using the api
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -4,17 +4,31 @@ import { ShoppingCart } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Product } from "@/types"
+import api from "@/api"
+
+type OrderItem = {
+  productId: string
+  quantity: number
+}
+
+type OrderCheckout = {
+  items: OrderItem[]
+}
 
 export function Cart() {
   const context = useContext(GlobalContext) //consume from the Global State
 
   if (!context) throw Error("Context is missing")
   const { state, handleDeleteFromCart, handleAddToCart } = context
+
   const groups = state.cart.reduce((acc, obj) => {
     const key = obj.id //groupuing object by id in cart
     const curGroup = acc[key] ?? []
     return { ...acc, [key]: [...curGroup, obj] }
-  }, {})
+  }, {} as { [productId: string]: Product[] })
+
+  console.log("groups:", groups)
 
   const total = state.cart.reduce((acc, curr) => {
     //this to get the total items' price in cart
@@ -29,7 +43,40 @@ export function Cart() {
 
   // const keys = Object.entries(groups)
   // console.log("keys", keys)
- 
+
+  const checkotOrder: OrderCheckout = {
+    items: []
+  }
+
+  Object.keys(groups).forEach((key) => {
+    // this to loop through the data and update the object
+    const products = groups[key]
+    checkotOrder.items.push({
+      //this to update the data in the items object
+      productId: key,
+      quantity: products.length
+    })
+  })
+
+  console.log("checkout:", checkotOrder)
+
+  const handleCheckout = async () => {
+    try {
+      const token = localStorage.getItem("token")
+      const res = await api.post("/checkout", checkotOrder, {
+        //2nd argument should be the data (checkoutOrder), since we are using post request
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -80,6 +127,7 @@ export function Cart() {
           })}
         </div>
         <p>Total:SAR {total} </p>
+        <Button onClick={handleCheckout}>Checkout</Button>
       </SheetContent>
     </Sheet>
   )
