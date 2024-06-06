@@ -28,7 +28,7 @@ export function Cart() {
     return { ...acc, [key]: [...curGroup, obj] }
   }, {} as { [productId: string]: Product[] })
 
-  console.log("groups:", groups)
+  console.log("test groups:", groups)
 
   const total = state.cart.reduce((acc, curr) => {
     //this to get the total items' price in cart
@@ -44,26 +44,26 @@ export function Cart() {
   // const keys = Object.entries(groups)
   // console.log("keys", keys)
 
-  const checkotOrder: OrderCheckout = {
+  const checkoutOrder: OrderCheckout = {
     items: []
   }
 
   Object.keys(groups).forEach((key) => {
     // this to loop through the data and update the object
     const products = groups[key]
-    checkotOrder.items.push({
+    checkoutOrder.items.push({
       //this to update the data in the items object
       productId: key,
       quantity: products.length
     })
   })
 
-  console.log("checkout:", checkotOrder)
+  console.log("test checkout:", checkoutOrder)
 
   const handleCheckout = async () => {
     try {
       const token = localStorage.getItem("token")
-      const res = await api.post("/checkout", checkotOrder, {
+      const res = await api.post("Order/checkout", checkoutOrder, {
         //2nd argument should be the data (checkoutOrder), since we are using post request
         headers: {
           Authorization: `Bearer ${token}`
@@ -93,7 +93,7 @@ export function Cart() {
             // console.log("products", products)
 
             const product = products[0]
-            // console.log("product", product)
+            console.log("product", product)
             const total = products.reduce((acc, curr) => {
               //this to get the total items' price in cart
               return acc + curr.price

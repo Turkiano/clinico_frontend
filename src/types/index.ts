@@ -57,7 +57,7 @@ export type Order = {
   id: string
   userId: string
   date: string
-  orderItem: string
+  orderItem: []
 }
 
 export default api

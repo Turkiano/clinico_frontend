@@ -1,6 +1,6 @@
 import api from "@/api"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Product, User } from "@/types"
+import { Order, Product, User } from "@/types"
 
 import {
   Table,
@@ -21,10 +21,21 @@ import { ProductCreateForm } from "@/components/component/product-create-form"
 export function Dashboard() {
   const queryClient = useQueryClient()
 
+  const getOrders = async () => {
+    //this is how to get the orders from the database
+    try {
+      const res = await api.get("/orders") //this is the get request
+      return res.data
+    } catch (error) {
+      console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+
   const getProducts = async () => {
     //this is how to get the products from the database
     try {
-      const res = await api.get("/products") //this is the get request 
+      const res = await api.get("/products") //this is the get request
       return res.data
     } catch (error) {
       console.error(error)
@@ -37,7 +48,8 @@ export function Dashboard() {
 
     try {
       const token = localStorage.getItem("token")
-      const res = await api.get("/users", { //this is the get request using the api
+      const res = await api.get("/users", {
+        //this is the get request using the api
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -51,6 +63,10 @@ export function Dashboard() {
   }
 
   // Queries
+  // const { data: orders, error } = useQuery<Order[]>({
+  //   queryKey: ["orders"],
+  //   queryFn: getOrders
+  // })
   const { data: products, error } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: getProducts

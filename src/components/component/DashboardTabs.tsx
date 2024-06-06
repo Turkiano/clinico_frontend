@@ -11,6 +11,20 @@ import { getTokenFromStorage } from "@/lib/utils"
 export function DashboardTabs() {
   const queryClient = useQueryClient()
 
+
+  const getOrders = async () => {
+    //call
+    //this is how we get the orders data from the database
+    try {
+      // console.log(search)
+      const res = await api.get("orders")
+      return res.data
+    } catch (error) {
+      // console.error(error)
+      return Promise.reject(new Error("Something went wrong"))
+    }
+  }
+
   const getProducts = async () => {
     //this is how to get the products from the database
     try {
@@ -39,16 +53,18 @@ export function DashboardTabs() {
     }
   }
 
-  const getOrders = async () => {
-    //this is how to get the products from the database
-    try {
-      const res = await api.get("/orders")
-      return res.data
-    } catch (error) {
-      console.error(error)
-      return Promise.reject(new Error("Something went wrong"))
-    }
-  }
+  // const getOrders = async () => {
+  //   //this is how to get the products from the database
+  //   try {
+  //     const res = await api.get("/orders")
+  //     return res.data
+  //   } catch (error) {
+  //     console.error(error)
+  //     return Promise.reject(new Error("Something went wrong"))
+  //   }
+  // }
+
+  
 
   // Queries
   const { data: products, error } = useQuery<Product[]>({
@@ -199,8 +215,11 @@ export function DashboardTabs() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
+                  <div>
+                    <Button>Hay</Button>
+                  </div>
                   {orders?.map((order) => (
-                    <TableRow key={order.id} className="w-[100px]">
+                    <TableRow key={order.id} className="">
                       <TableCell className="font-center">{order.id}</TableCell>
                       <TableCell className="text-center">{order.userId}</TableCell>
                       <TableCell className="text-center">{order.date}</TableCell>
