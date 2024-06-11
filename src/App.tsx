@@ -59,6 +59,7 @@ type GlobalContextType = {
   handleAddToCart: (product: Product) => void
   handleStoreUser: (user: DecodedUser) => void
   handleDeleteFromCart: (id: string) => void
+  handleRemoveCart: () => void
 }
 
 type GlobalState = {
@@ -104,7 +105,15 @@ function App() {
 
     setState({
       ...state,
-      cart: cart //this is the update caart list (after deleting)
+      cart: cart //this is the update cart list (after deleting)
+    })
+  }
+
+  const handleRemoveCart = () => {
+   
+    setState({
+      ...state,
+      cart: [] //this is the updated cart list (after deleting)
     })
   }
 
@@ -120,7 +129,7 @@ function App() {
   return (
     <div className="App">
       <GlobalContext.Provider
-        value={{ state, handleAddToCart, handleStoreUser, handleDeleteFromCart }}
+        value={{ state, handleAddToCart, handleStoreUser, handleDeleteFromCart, handleRemoveCart }} //this to invok all the handlers functions
       >
         <RouterProvider router={router} /> {/* //this is to invok the router function */}
       </GlobalContext.Provider>

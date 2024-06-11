@@ -13,6 +13,7 @@ import { GlobalContext } from "@/App"
 import { Link } from "react-router-dom"
 import { ChangeEvent, useContext, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
+import { CalendarCheck, MoreHorizontal } from "lucide-react"
 
 type ProductCardProps = {
   data: Product[]
@@ -91,28 +92,26 @@ export function ProductsCard({
         </div>
       </div>
 
-      <section className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5 w-screen overflow-x-scroll ">
-        <div className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5  overflow-x-scroll  w-[75%]">
+      <section className="flex flex-col md:flex-row gap-4 justify-between mx-auto mb-5 w-screen  ">
+        <div className="flex flex-col md:flex-row gap-4 justify-center mx-auto mb-5   w-[75%]">
           {data?.map((product) => (
-            <Card key={product.id} className="w-[350px]">
-              <CardHeader>
-                <img src={product.image} className="mb-4 h-48 object-contain" />
-                <CardTitle>{product.name}</CardTitle>
-                <CardDescription>{product.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>SAR {product.price}</p>
-              </CardContent>
-              <CardFooter>
-                <Link className="w-full" to={`/product/${product.id}`}>
-                  <Button className="w-80%">Show Details</Button>
-                </Link>
-                <Link className="w-full" to="">
-                  <Button className="w-80%" onClick={() => handleAddToCart(product)}>
-                    Add to Cart
+            <Card key={product.id} className="w-[350px] p-0 overflow-hidden relative">
+              <img src={product.image} className="mb-4  object-contain w-full" />
+              <div className=" absolute z-10 top-[77%] bg-white w-full">
+                <CardHeader className="p-0 pt-6">
+                  <CardTitle>{product.name}</CardTitle>
+                  <CardDescription>{product.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="pb-6">
+                  <p>SAR {product.price}</p>
+                </CardContent>
+
+                <Link className="w-full absolute -top-5 left-0" to={`/product/${product.id}`}>
+                  <Button className=" aspect-square p-0 bg-[#17a2b8] rounded-full">
+                    <CalendarCheck />
                   </Button>
                 </Link>
-              </CardFooter>
+              </div>
             </Card>
           ))}
         </div>

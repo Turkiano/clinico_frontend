@@ -12,15 +12,11 @@ type OrderItem = {
   quantity: number
 }
 
-type OrderCheckout = {
-  items: OrderItem[]
-}
-
 export function Cart() {
   const context = useContext(GlobalContext) //consume from the Global State
 
   if (!context) throw Error("Context is missing")
-  const { state, handleDeleteFromCart, handleAddToCart } = context
+  const { state, handleDeleteFromCart, handleAddToCart, handleRemoveCart } = context
 
   const groups = state.cart.reduce((acc, obj) => {
     const key = obj.id //groupuing object by id in cart
@@ -44,26 +40,23 @@ export function Cart() {
   // const keys = Object.entries(groups)
   // console.log("keys", keys)
 
-  const checkoutOrder: OrderCheckout = {
-    items: []
-  }
+  const checkoutOrder: OrderItem[] = []
 
   Object.keys(groups).forEach((key) => {
     // this to loop through the data and update the object
     const products = groups[key]
-    checkoutOrder.items.push({
+    checkoutOrder.push({
       //this to update the data in the items object
       productId: key,
       quantity: products.length
     })
   })
 
-  console.log("test checkout:", checkoutOrder)
-
   const handleCheckout = async () => {
     try {
+      console.log("test checkout:", checkoutOrder)
       const token = localStorage.getItem("token")
-      const res = await api.post("Order/checkout", checkoutOrder, {
+      const res = await api.post("/orders/checkout", checkoutOrder, {
         //2nd argument should be the data (checkoutOrder), since we are using post request
         headers: {
           Authorization: `Bearer ${token}`

@@ -29,6 +29,8 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.9.0",
     "jwt-decode": "^3.1.2",
     "ldrs": "^1.0.2",
     "lucide-react": "^0.378.0",

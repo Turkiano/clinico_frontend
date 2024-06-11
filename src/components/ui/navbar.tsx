@@ -1,9 +1,3 @@
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList
-} from "@radix-ui/react-navigation-menu"
 import { Link } from "react-router-dom"
 import { GlobalContext } from "@/App"
 import { useContext } from "react"
@@ -25,63 +19,37 @@ export function NavBar() {
       <div className="">
         <h3>Logo</h3>
       </div>
-      <NavigationMenu>
-        <NavigationMenuList className="flex gap-5 mr-5">
-          <NavigationMenuItem>
-            <Link to="/">
-              <NavigationMenuLink>Home</NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
 
-          <NavigationMenuItem>
-            <Link to=" ">
-              <NavigationMenuLink>About us</NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          {state.user?.role === Role.Admin && ( //this to hide the page from users
-            <NavigationMenuItem>
-              <Link to="/dashboard">
-                <NavigationMenuLink>Dashboard</NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          )}
+      <div className={`w-1/5 flex justify-around ${state.user?.role !== Role.Admin && "w-36"}`}>
+        <Link to="/">Home</Link>
 
-          {!state.user && (
-            <NavigationMenuItem>
-              <Link to="/SignUp">
-                <NavigationMenuLink>Sign Up</NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          )}
+        <Link to=" ">About us</Link>
 
+        {state.user?.role === Role.Admin && ( //this to hide the page from users
+          <Link to="/dashboard">Dashboard</Link>
+        )}
+      </div>
+
+      <div className="flex gap-3 items-center ">
+        <div className=" w-36 flex justify-around ">
+          {" "}
+          {!state.user && <Link to="/SignUp">Sign Up</Link>}
           {/* <Link to="/SignUp"> */}
-          {!state.user && (
-            <NavigationMenuItem>
-              <Link to="/Login">
-                <NavigationMenuLink>Login</NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          )}
-        </NavigationMenuList>
-      </NavigationMenu>
-      <div className="flex gap-3 item-center ">
+          {!state.user && <Link to="/Login">Login</Link>}
+        </div>
         {/* this to add the cart as an icon */}
         <Cart />
         {/* this to add the cart as an icon */}
 
-        <NavigationMenu>
-          <NavigationMenuList className="flex gap-5 mr-5">
-            {state.user && (
-              <NavigationMenuItem>
-                <Link to={`/users/profile/${state.user.emailaddress}/`}>
-                  <Button variant="outline">
-                    <UserRoundIcon />
-                  </Button>
-                </Link>
-              </NavigationMenuItem>
-            )}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="flex gap-5 mr-5">
+          {state.user && (
+            <Link to={`/users/profile/${state.user.emailaddress}/`}>
+              <Button variant="outline">
+                <UserRoundIcon />
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   )

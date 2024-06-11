@@ -29,7 +29,7 @@ export function Home() {
       const res = await api.get(`products?limit=5&page=1&search=${search}&filter=${filter}`)
       return res.data
     } catch (error) {
-      // console.error(error)
+      console.error(error)
       return Promise.reject(new Error("Something went wrong"))
     }
   }
