@@ -1,57 +1,86 @@
-# Project: Frontend for E-commerce Website
+# 🏥 Clinico – Medical Appointment Booking System
 
-Tech Stack: React, TypeScript. Styling: Tailwind, MUI, or CSS/SASS
+[Live Demo](https://clinico-frontend.vercel.app/)
 
-### Level 1: Basic Requirements
+Clinico is a full-stack medical appointment booking platform designed to simplify the scheduling process for doctors and patients. With a clean interface and secure backend, users can easily create accounts, manage profiles, and book or accept appointments—all in real time.
 
-**Pages to Create:**
+---
 
-[x] Home page (list all the products)
-[x] Product page (contain the details of a product)
-[x] Dashboard page
+## 🛠️ Technologies Used
 
-**Functionalities for a Visitor:**
+**Frontend:**
+- ⚛️ React (TypeScript)
+- 💅 Shadcn UI + Tailwind CSS
+- 🔄 React Query for data fetching
+- 🌐 React Router DOM
 
-[x] Get list of products
+**Backend:**
+- 🧠 ASP.NET Core Web API
+- 🗃️ PostgreSQL (via Supabase)
+- 🐳 Docker for containerization
+- 🔐 JWT Authentication
 
-- Filter products by categories or price
-  [x] Search products by name
-  [x] Add products to a cart
-  [x] Remove products from a cart
+**Dev Tools:**
+- 📦 Vite
+- 🔧 VS Code, Git, GitHub
+- 🐘 PgAdmin
+- 🔁 Render.com (backend deployment)
+- ▲ Vercel (frontend deployment)
 
-**Functionalities for an Admin:**
+---
 
-- Add a new product, update info of a product, remove a product
+## 🚀 Installation Instructions
 
-### Level 2: Additional Requirements
+### Prerequisites
+- Node.js
+- .NET 8 SDK
+- Docker
+- PostgreSQL (or Supabase account)
 
-**Authentication:**
+### Clone the Repo
+```bash
+git clone https://github.com/your-username/clinico.git
+cd clinico
 
-[x] Implement register and login functionality via email and password
-[x] Protect the routes based on login and admin status
+Frontend
+cd clinico-frontend
+yarn install
+yarn dev
 
-**Functionalities for an Admin:**
+👩‍⚕️ Usage Example
+Patient: Register → Login → Browse doctors → Book appointment → View upcoming sessions
+Doctor: Login → View bookings → Accept or reject appointments → Manage profile
 
-[x] list all users, delete or block a user.
-[ ] list all orders
-[ ] Add a new category, update info of a category, remove a category
+✨ Features and Functionality
+🔐 Secure JWT-based login & role-based access (Doctor / Patient)
 
-**Form Validation:**
+📅 Real-time appointment booking and approval
 
-- Implement form validation.
+📝 Doctor profiles and availability
 
-### Level 3: Bonus Requirement (Optional)
+👤 Patient dashboard with history and upcoming visits
 
-If you have a higher skill level and finish the previous requirements before the deadline, you can tackle the following bonus tasks:
+📨 Notifications for booking status
 
-- Messages, show loading, success, and error messages (e.g., when loading products list or adding new product)
-- Implement pagination feature
-- Create a Profile Page (only available if user logs in), implement editing user profile feature (user can change first name, last name)
+🐳 Fully Dockerized backend
 
-- Peer Review:
-- Review the code and implementation of 2 assignments from other participants.
-- Provide constructive feedback and suggestions for improvement.
+📱 Responsive and accessible UI
 
-`Please note that the bonus requirements and reviews are optional and can be completed if you have additional time and advanced skills.`
 
-Happy coding!
+
+
+🤝 Contributing Guidelines
+Fork the repo
+
+Create a new branch: git checkout -b feature/your-feature
+
+Commit your changes: git commit -m 'Add new feature'
+
+Push to the branch: git push origin feature/your-feature
+
+Create a pull request
+
+All contributions are welcome—whether it's UI improvement, feature addition, or bug fixes!
+
+📄 License
+MIT License © 2025 TurkiSaeed
