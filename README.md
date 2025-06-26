@@ -2,7 +2,7 @@
 
 [Live Demo](https://clinico-frontend.vercel.app/)
 
-Clinico is a full-stack medical appointment booking platform designed to simplify the scheduling process for doctors and patients. With a clean interface and secure backend, users can easily create accounts, manage profiles, and book or accept appointments—all in real time.
+Clinico is a full-stack medical appointment booking platform designed to simplify the scheduling process for doctors and patients. With a clean interface and secure backend, users can easily create accounts, manage profiles, and book or accept appointments, all in real time.
 
 ---
 
